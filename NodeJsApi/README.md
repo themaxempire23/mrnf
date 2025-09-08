@@ -14,3 +14,4 @@ multer
 
 Development Dependancies(devDependancies):
 nodemon -> a tool that support hot reload in node.js backend applications.
+        -> npm i save-dev nodemon

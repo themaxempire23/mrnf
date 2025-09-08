@@ -6,7 +6,7 @@ const port = 3000;
 const server = createServer((req, res) => {
   res.statusCode = 200; // to indicate a succesful response
   res.setHeader('Content-Type', 'text/plain');
-  res.end('My Node Server');
+  res.end('My Node Server, is up and running!');
 });
 
 server.listen(port, hostname, () => {
