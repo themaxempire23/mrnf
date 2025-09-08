@@ -1,14 +1,41 @@
-const { createServer } = require('node:http'); //in build http module wich allows me to create server and client
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const morgan = require("morgan"); // Keeps tracks of requests to our server
 
-const hostname = '127.0.0.1';
-const port = 3000;
+//configuring the dotenv 
+dotenv.config();
 
-const server = createServer((req, res) => {
-  res.statusCode = 200; // to indicate a succesful response
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('My Node Server, is up and running!');
+//* App
+const app=express();
+
+//-------------Adding the database connection---------------------//
+//* connect to database
+mongoose.connect(process.env.MONGO_URI, {
+    dbName:"firebase-auth-sample",
+}).then(() => {
+    console.log("connected to database");
+}).catch((err) => {
+    console.log(err);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+mongoose.connection.on("error", (err) => {
+  console.log("Database connection error:", err);
 });
+
+
+
+//* middleware
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
+
+
+const port = process.env.PORT || 8000;
+
+
+app.listen(port, () => {
+    console.log(`Server running at http://:${port}/`);
+})
