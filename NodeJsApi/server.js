@@ -32,6 +32,10 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
+//* routes
+
+app.use("/api", authRoutes);
+
 
 const port = process.env.PORT || 8000;
 
